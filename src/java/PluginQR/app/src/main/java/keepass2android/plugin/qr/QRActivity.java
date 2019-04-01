@@ -1,5 +1,9 @@
 package keepass2android.plugin.qr;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,8 +19,6 @@ import keepass2android.pluginsdk.KeepassDefs;
 import keepass2android.pluginsdk.Kp2aControl;
 import keepass2android.pluginsdk.Strings;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -130,7 +132,9 @@ public class QRActivity extends Activity {
 			
 			mEntryOutput = Kp2aControl.getEntryFieldsFromIntent(getActivity().getIntent());
 			mProtectedFieldsList = getProtectedFieldsList(getActivity().getIntent());
-			
+
+			HIBPClient client = new HIBPClient(mEntryOutput.get(KeepassDefs.PasswordField), this.getContext());
+			client.startCheckingPassword();
 			ArrayList<String> spinnerItems = new ArrayList<String>();
 			spinnerItems.add(getActivity().getString(R.string.all_fields));
 			mFieldList.add(null); //all fields
@@ -172,7 +176,7 @@ public class QRActivity extends Activity {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("includeLabels", isChecked);
-					updateQrCode(buildQrData(mFieldList.get( mSpinner.getSelectedItemPosition() )));
+					//updateQrCode(buildQrData(mFieldList.get( mSpinner.getSelectedItemPosition() )));
 				}
 			});
 			
@@ -192,7 +196,7 @@ public class QRActivity extends Activity {
 					fieldId = fieldId.substring(Strings.PREFIX_STRING.length());
 				}
 			}
-			updateQrCode(buildQrData(fieldId));
+			//updateQrCode(buildQrData(fieldId));
 			
 			mImageView.setOnClickListener(new OnClickListener() {
 				
@@ -211,7 +215,7 @@ public class QRActivity extends Activity {
 						mCbIncludeLabel.setVisibility(View.VISIBLE);
 					else
 						mCbIncludeLabel.setVisibility(View.GONE);
-					updateQrCode(buildQrData(mFieldList.get(arg2)));
+					//updateQrCode(buildQrData(mFieldList.get(arg2)));
 				}
 
 				@Override
@@ -285,32 +289,6 @@ public class QRActivity extends Activity {
 			}
 			
 			return res;
-		}
-
-		private void updateQrCode(String qrData) {
-			DisplayMetrics displayMetrics = new DisplayMetrics();
-			WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
-			wm.getDefaultDisplay().getMetrics(displayMetrics);
-			int screenWidth = displayMetrics.widthPixels;
-			int screenHeight = displayMetrics.heightPixels;
-			
-			int qrCodeDimension = screenWidth > screenHeight ? screenHeight : screenWidth;
-			QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrData, null,
-			        Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimension);
-
-			
-
-			try {
-			    mBitmap = qrCodeEncoder.encodeAsBitmap();
-			    mImageView.setImageBitmap(mBitmap);
-			    mImageView.setVisibility(View.VISIBLE);
-			    mErrorView.setVisibility(View.GONE);
-			} catch (WriterException e) {
-			    e.printStackTrace();
-			    mErrorView.setText("Error: "+e.getMessage());
-			    mErrorView.setVisibility(View.VISIBLE);
-			    mImageView.setVisibility(View.GONE);
-			}
 		}
 		
 		private void zoomImageFromThumb() {

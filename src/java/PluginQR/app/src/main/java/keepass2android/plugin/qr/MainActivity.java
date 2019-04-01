@@ -2,7 +2,6 @@ package keepass2android.plugin.qr;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,10 +12,7 @@ import keepass2android.pluginsdk.KeepassDefs;
 import keepass2android.pluginsdk.Kp2aControl;
 import keepass2android.pluginsdk.Strings;
 
-import com.google.zxing.client.android.CaptureActivity;
-
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
@@ -34,7 +30,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
 
 public class MainActivity extends Activity {
 
@@ -185,6 +180,9 @@ public class MainActivity extends Activity {
 	    	{
 	    		if (intent != null)
 	    		{
+
+
+
 	    			Intent i = new Intent(this, QRActivity.class);
 	    			i.putExtra(Strings.EXTRA_ENTRY_OUTPUT_DATA, intent.getStringExtra(Strings.EXTRA_ENTRY_OUTPUT_DATA));
 	    			i.putExtra(Strings.EXTRA_PROTECTED_FIELDS_LIST, intent.getStringExtra(Strings.EXTRA_PROTECTED_FIELDS_LIST));
@@ -238,18 +236,6 @@ public class MainActivity extends Activity {
 				Bundle savedInstanceState) {
 			mRootView = inflater.inflate(R.layout.fragment_main, container,
 					false);
-			
-			mRootView.findViewById(R.id.btnScanQRCode).setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					mRootView.findViewById(R.id.progressBar1).setVisibility(View.VISIBLE);
-					Intent i = new Intent(getActivity(), CaptureActivity.class);
-					i.setAction("com.google.zxing.client.android.SCAN");
-					getActivity().startActivityForResult(i, 0);
-					
-				}
-			});
 			
 			
 			mRootView.findViewById(R.id.btnShowQR).setOnClickListener(new OnClickListener() {
