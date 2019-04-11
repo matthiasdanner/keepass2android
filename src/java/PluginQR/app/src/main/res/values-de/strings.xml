@@ -133,4 +133,5 @@
   <string name="wifi_changing_network">Verbindung zum Netzwerk anfordern\u2026</string>
   <string name="wifi_ssid_label">WLAN-Name:</string>
   <string name="wifi_type_label">Verschlüsselung:</string>
+    <string name="user_name_title">Benutzername:</string>
 </resources>

@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="keepass2android.plugin.qr.MainActivity" >
+    tools:context="keepass2android.plugin.hibp.MainActivity" >
  <item android:id="@+id/menu_about"
         android:title="@string/about"
         android:icon="@android:drawable/ic_menu_help"

@@ -1,4 +1,4 @@
-package keepass2android.plugin.qr;
+package keepass2android.plugin.hibp;
 
 import java.util.ArrayList;
 

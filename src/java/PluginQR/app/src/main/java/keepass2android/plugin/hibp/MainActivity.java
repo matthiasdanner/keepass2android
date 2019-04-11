@@ -1,4 +1,4 @@
-package keepass2android.plugin.qr;
+package keepass2android.plugin.hibp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,21 +54,14 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
-		new Builder(this)
-		.setMessage(R.string.about_msg)
-		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				
-			}
-			
+		Intent i = new Intent(this, HIBPActivity.class);
+		i.putExtra(Strings.EXTRA_ENTRY_OUTPUT_DATA, "{\"UserName\":\"test\",\"Title\":\"test\",\"URL\":\"\",\"Notes\":\"\",\"Password\":\"NJTIfvLvx9qi\"}");
+		i.putExtra(Strings.EXTRA_PROTECTED_FIELDS_LIST, "[\"Password\"]");
+		i.putExtra(Strings.EXTRA_SENDER, (String)null);
+		i.putExtra(Strings.EXTRA_ENTRY_ID, "6B6D3C3200A4D44AB4C257BEFEE7E303");
+		startActivity(i);
 
-		})
-		.create().show();
-		
 		return true;
 	}
 
@@ -180,17 +173,13 @@ public class MainActivity extends Activity {
 	    	{
 	    		if (intent != null)
 	    		{
-
-
-
-	    			Intent i = new Intent(this, QRActivity.class);
+	    			Intent i = new Intent(this, HIBPActivity.class);
 	    			i.putExtra(Strings.EXTRA_ENTRY_OUTPUT_DATA, intent.getStringExtra(Strings.EXTRA_ENTRY_OUTPUT_DATA));
 	    			i.putExtra(Strings.EXTRA_PROTECTED_FIELDS_LIST, intent.getStringExtra(Strings.EXTRA_PROTECTED_FIELDS_LIST));
 	    			i.putExtra(Strings.EXTRA_SENDER, intent.getStringExtra(Strings.EXTRA_SENDER));
 	    			i.putExtra(Strings.EXTRA_ENTRY_ID, intent.getStringExtra(Strings.EXTRA_ENTRY_ID));
 	    			startActivity(i);		
 	    		}
-	    		
 	    	}
 	    	else
 	    	{

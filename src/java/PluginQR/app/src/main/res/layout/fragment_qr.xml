@@ -14,7 +14,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="keepass2android.plugin.qr.QRActivity$PlaceholderFragment" >
+    tools:context="keepass2android.plugin.hibp.QRActivity$PlaceholderFragment" >
     
     <Spinner
         android:id="@+id/spinner"

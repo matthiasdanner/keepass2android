@@ -1,15 +1,12 @@
-package keepass2android.plugin.qr;
+package keepass2android.plugin.hibp;
 
 import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -22,10 +19,12 @@ class HIBPClient {
 
     private final String hashedPassword;
     private final Context context;
+    private final HIBPClientDelegate delegate;
 
-    HIBPClient(String password, Context context) {
+    HIBPClient(String password, Context context, HIBPClientDelegate delegate) {
         this.hashedPassword = HIBPClient.getHashedPassword(password);
         this.context = context;
+        this.delegate = delegate;
     }
 
     private static String getHashedPassword(String password) {
@@ -60,10 +59,15 @@ class HIBPClient {
                 if (passwordInfo.length >= 2) {
                     if (this.hashedPassword.endsWith(passwordInfo[0])) {
                         Logger.getLogger(this.toString()).log(INFO, line);
+                        this.delegate.finishedPasswordCheck(true, false);
+                        return;
                     }
                 }
             }
+            this.delegate.finishedPasswordCheck(true, true);
+            return;
         }
+        this.delegate.finishedPasswordCheck(false, false);
     }
 
 

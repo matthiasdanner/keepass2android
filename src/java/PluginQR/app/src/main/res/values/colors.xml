@@ -26,4 +26,7 @@
   <color name="transparent">#00000000</color>
   <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
   <color name="viewfinder_mask">#60000000</color>
+  <color name="green">#20a347</color>
+  <color name="red">#b21f05</color>
+  <color name="yellow">#d88c08</color>
 </resources>
